@@ -1,0 +1,56 @@
+{
+  "provider": "openai",
+  "models": [
+    {
+      "id": "openai/gpt-oss-20b",
+      "status": "stable",
+      "modalities": ["text"],
+      "capabilities": ["text_generation", "streaming", "tool_calling", "structured_output", "text_input"],
+      "limits": {
+        "context_tokens": 131072
+      }
+    },
+    {
+      "id": "gpt-4o",
+      "status": "stable",
+      "modalities": ["text"],
+      "capabilities": ["text_generation", "streaming", "tool_calling", "structured_output", "text_input", "image_input"],
+      "limits": {
+        "context_tokens": 128000,
+        "output_tokens": 16384
+      },
+      "released_at": "2024-05-13",
+      "updated_at": "2026-06-18"
+    },
+    {
+      "id": "gpt-4o*",
+      "status": "stable",
+      "modalities": ["text"],
+      "capabilities": ["text_generation", "streaming", "tool_calling", "structured_output", "text_input", "image_input"]
+    },
+    {
+      "id": "gpt-4.1*",
+      "status": "stable",
+      "modalities": ["text"],
+      "capabilities": ["text_generation", "streaming", "tool_calling", "structured_output", "text_input", "image_input", "file_input"]
+    },
+    {
+      "id": "gpt-*-audio*",
+      "status": "stable",
+      "modalities": ["text"],
+      "capabilities": ["text_generation", "streaming", "tool_calling", "structured_output", "text_input", "audio_input"]
+    },
+    {
+      "id": "o*",
+      "status": "stable",
+      "modalities": ["text"],
+      "capabilities": ["text_generation", "streaming", "tool_calling", "structured_output", "reasoning", "text_input", "image_input"]
+    },
+    {
+      "id": "gpt-5*",
+      "status": "stable",
+      "modalities": ["text"],
+      "capabilities": ["text_generation", "streaming", "tool_calling", "structured_output", "reasoning", "text_input", "image_input", "file_input"]
+    }
+  ]
+}
