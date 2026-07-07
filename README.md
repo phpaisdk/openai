@@ -61,6 +61,7 @@ $provider = OpenAI::create([
 | Tool calling | Native |
 | Structured output | Native (`json_schema`) |
 | Reasoning | Native (`reasoning_effort`) |
+| Image generation | Native |
 | Text input | Native |
 | Image input | Native |
 | Audio input | Native |
@@ -81,6 +82,21 @@ foreach ($stream->chunks() as $chunk) {
 }
 
 $result = $stream->run();
+```
+
+## Image Generation
+
+```php
+use AiSdk\Generate;
+use AiSdk\OpenAI;
+
+$result = Generate::image()
+    ->model(OpenAI::image('gpt-image-1'))
+    ->prompt('A clean app icon for a PHP AI SDK')
+    ->size('1024x1024')
+    ->run();
+
+$result->output->save(__DIR__.'/icon.png');
 ```
 
 ## Structured Output
