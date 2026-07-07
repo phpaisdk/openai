@@ -51,6 +51,24 @@
       "status": "stable",
       "modalities": ["text"],
       "capabilities": ["text_generation", "streaming", "tool_calling", "structured_output", "reasoning", "text_input", "image_input", "file_input"]
+    },
+    {
+      "id": "gpt-image-1",
+      "status": "stable",
+      "modalities": ["image"],
+      "capabilities": ["image_generation"]
+    },
+    {
+      "id": "dall-e-3",
+      "status": "stable",
+      "modalities": ["image"],
+      "capabilities": ["image_generation"]
+    },
+    {
+      "id": "dall-e-2",
+      "status": "stable",
+      "modalities": ["image"],
+      "capabilities": ["image_generation"]
     }
   ]
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AiSdk;
 
 use AiSdk\Contracts\TextModelInterface;
+use AiSdk\Contracts\ImageModelInterface;
 use AiSdk\OpenAI\OpenAIOptions;
 use AiSdk\OpenAI\OpenAIProvider;
 use AiSdk\Support\Concerns\RegistersModels;
@@ -41,5 +42,10 @@ final class OpenAI
     public static function model(string $modelId): TextModelInterface
     {
         return self::default()->textModel($modelId);
+    }
+
+    public static function image(string $modelId): ImageModelInterface
+    {
+        return self::default()->imageModel($modelId);
     }
 }
