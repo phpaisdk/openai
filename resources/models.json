@@ -69,6 +69,24 @@
       "status": "stable",
       "modalities": ["image"],
       "capabilities": ["image_generation"]
+    },
+    {
+      "id": "gpt-4o-mini-tts",
+      "status": "stable",
+      "modalities": ["audio"],
+      "capabilities": ["speech_generation"]
+    },
+    {
+      "id": "tts-1",
+      "status": "stable",
+      "modalities": ["audio"],
+      "capabilities": ["speech_generation"]
+    },
+    {
+      "id": "tts-1-hd",
+      "status": "stable",
+      "modalities": ["audio"],
+      "capabilities": ["speech_generation"]
     }
   ]
 }

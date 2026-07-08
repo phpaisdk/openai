@@ -6,8 +6,10 @@ namespace AiSdk\OpenAI;
 
 use AiSdk\Contracts\BaseProvider;
 use AiSdk\Contracts\ImageModelInterface;
+use AiSdk\Contracts\SpeechModelInterface;
 use AiSdk\Contracts\TextModelInterface;
 use AiSdk\OpenAI\Models\OpenAIImageModel;
+use AiSdk\OpenAI\Models\OpenAISpeechModel;
 use AiSdk\OpenAI\Models\OpenAITextModel;
 
 final class OpenAIProvider extends BaseProvider
@@ -27,5 +29,10 @@ final class OpenAIProvider extends BaseProvider
     public function imageModel(string $modelId): ImageModelInterface
     {
         return new OpenAIImageModel($modelId, $this->options, $this->modelRegistry());
+    }
+
+    public function speechModel(string $modelId): SpeechModelInterface
+    {
+        return new OpenAISpeechModel($modelId, $this->options, $this->modelRegistry());
     }
 }

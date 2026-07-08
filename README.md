@@ -62,6 +62,7 @@ $provider = OpenAI::create([
 | Structured output | Native (`json_schema`) |
 | Reasoning | Native (`reasoning_effort`) |
 | Image generation | Native |
+| Speech generation | Native |
 | Text input | Native |
 | Image input | Native |
 | Audio input | Native |
@@ -97,6 +98,25 @@ $result = Generate::image()
     ->run();
 
 $result->output->save(__DIR__.'/icon.png');
+```
+
+## Speech Generation
+
+```php
+use AiSdk\Generate;
+use AiSdk\OpenAI;
+
+$result = Generate::speech()
+    ->model(OpenAI::speech('gpt-4o-mini-tts'))
+    ->input('Today is a wonderful day to build something people love.')
+    ->voice('coral')
+    ->format('mp3')
+    ->providerOptions('openai', [
+        'instructions' => 'Speak in a cheerful and positive tone.',
+    ])
+    ->run();
+
+$result->output->save(__DIR__.'/speech.mp3');
 ```
 
 ## Structured Output
