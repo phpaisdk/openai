@@ -5,17 +5,20 @@ declare(strict_types=1);
 namespace AiSdk\OpenAI;
 
 use AiSdk\Contracts\BaseProvider;
+use AiSdk\Contracts\EmbeddingModelInterface;
+use AiSdk\Contracts\EmbeddingProviderInterface;
 use AiSdk\Contracts\ImageModelInterface;
 use AiSdk\Contracts\ImageProviderInterface;
 use AiSdk\Contracts\SpeechModelInterface;
 use AiSdk\Contracts\SpeechProviderInterface;
 use AiSdk\Contracts\TextModelInterface;
 use AiSdk\Contracts\TextProviderInterface;
+use AiSdk\OpenAI\Models\OpenAIEmbeddingModel;
 use AiSdk\OpenAI\Models\OpenAIImageModel;
 use AiSdk\OpenAI\Models\OpenAISpeechModel;
 use AiSdk\OpenAI\Models\OpenAITextModel;
 
-final class OpenAIProvider extends BaseProvider implements ImageProviderInterface, SpeechProviderInterface, TextProviderInterface
+final class OpenAIProvider extends BaseProvider implements EmbeddingProviderInterface, ImageProviderInterface, SpeechProviderInterface, TextProviderInterface
 {
     public function __construct(public readonly OpenAIOptions $options) {}
 
@@ -37,5 +40,10 @@ final class OpenAIProvider extends BaseProvider implements ImageProviderInterfac
     public function speechModel(string $modelId): SpeechModelInterface
     {
         return new OpenAISpeechModel($modelId, $this->options);
+    }
+
+    public function embeddingModel(string $modelId): EmbeddingModelInterface
+    {
+        return new OpenAIEmbeddingModel($modelId, $this->options);
     }
 }

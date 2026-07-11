@@ -63,6 +63,7 @@ $provider = OpenAI::create([
 | Reasoning | Native (`reasoning_effort`) |
 | Image generation | Native |
 | Speech generation | Native |
+| Embeddings | Native |
 | Text input | Native |
 | Image input | Native |
 | Audio input | Native |
@@ -84,6 +85,26 @@ foreach ($stream->chunks() as $chunk) {
 
 $result = $stream->run();
 ```
+
+## Embeddings
+
+Generate one or more text embeddings in the same request:
+
+```php
+use AiSdk\Generate;
+use AiSdk\OpenAI;
+
+$result = Generate::embedding(['Search query', 'Document text'])
+    ->model(OpenAI::embedding('text-embedding-3-small'))
+    ->dimensions(256)
+    ->providerOptions('openai', ['user' => 'user-123'])
+    ->run();
+
+$queryVector = $result->embeddings[0]->vector;
+$documentVector = $result->embeddings[1]->vector;
+```
+
+`dimensions()` is supported by OpenAI's `text-embedding-3` models. Model IDs remain opaque, so OpenAI validates whether the selected model accepts the requested dimensions.
 
 ## Image Generation
 
@@ -186,4 +207,5 @@ composer test
 ## Links
 
 - [Core Package](https://github.com/phpaisdk/core)
+- [OpenAI Embeddings Guide](https://developers.openai.com/api/docs/guides/embeddings)
 - [Project Documentation](https://github.com/phpaisdk)
