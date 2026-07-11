@@ -91,8 +91,10 @@ it('sends image input for image-capable models', function () {
     ]);
 });
 
-it('blocks unsupported file input before sending an OpenAI request', function () {
-    $client = new FakeHttpClient(200, json_encode([]));
+it('serializes file input through the OpenAI adapter', function () {
+    $client = new FakeHttpClient(200, json_encode([
+        'choices' => [['message' => ['content' => 'Read'], 'finish_reason' => 'stop']],
+    ]));
     configureWith($client);
     OpenAI::create(['apiKey' => 'sk-test']);
 
@@ -105,15 +107,22 @@ it('blocks unsupported file input before sending an OpenAI request', function ()
         ])
         ->model(OpenAI::model('gpt-4o'))
         ->run();
-})->throws(\AiSdk\Exceptions\CapabilityNotSupportedException::class);
 
-it('loads model capabilities from resources models json', function () {
+    expect($client->sentBody()['messages'][0]['content'][1])->toMatchArray([
+        'type' => 'file',
+        'file' => [
+            'filename' => 'report.pdf',
+            'file_data' => 'data:application/pdf;base64,JVBERi0=',
+        ],
+    ]);
+});
+
+it('accepts opaque model ids without public capability inspection', function () {
     OpenAI::create(['apiKey' => 'sk-test']);
 
-    $model = OpenAI::model('gpt-4o');
+    $model = OpenAI::model('future-private-model');
 
-    expect($model->supports(\AiSdk\Capability::ImageInput))->toBeTrue()
-        ->and($model->supports(\AiSdk\Capability::FileInput))->toBeFalse();
+    expect($model->modelId())->toBe('future-private-model');
 });
 
 it('does not silently ignore explicit reasoning token budgets', function () {

@@ -158,38 +158,11 @@ $result = Generate::text()
     ->run();
 ```
 
-## Custom Model Registration
+## Model IDs and Capabilities
 
-Register new OpenAI models without waiting for a package release:
+OpenAI model IDs pass through unchanged and do not need to be registered. The package does not ship a model inventory; the OpenAI API remains the authority on whether a particular model accepts a requested feature.
 
-```php
-use AiSdk\Capability;
-use AiSdk\OpenAI;
-
-OpenAI::registerModel('gpt-4.2', capabilities: [
-    Capability::TextGeneration,
-    Capability::Streaming,
-    Capability::ToolCalling,
-    Capability::StructuredOutput,
-    Capability::TextInput,
-    Capability::ImageInput,
-]);
-
-$result = Generate::text('Hello')
-    ->model(OpenAI::model('gpt-4.2'))
-    ->run();
-```
-
-Unknown unregistered models are allowed for text generation. For unlisted advanced capabilities, opt in on the model handle:
-
-```php
-$model = OpenAI::model('gpt-4.2-preview')->assume([
-    Capability::ToolCalling,
-    Capability::StructuredOutput,
-]);
-```
-
-The OpenAI API will return a normalized SDK exception if the model or requested feature is rejected by the provider.
+Capabilities describe what the OpenAI adapter can serialize. The OpenAI API returns a normalized SDK exception if the selected model or requested feature is rejected.
 
 ## Provider-Specific Options
 

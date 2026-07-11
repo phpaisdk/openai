@@ -54,7 +54,7 @@ it('generates images through the OpenAI image endpoint', function () {
         ->and($body['prompt'])->toBe('A red cube')
         ->and($body['n'])->toBe(2)
         ->and($body['size'])->toBe('1024x1024')
-        ->and($body['response_format'])->toBe('b64_json')
+        ->and($body)->not->toHaveKey('response_format')
         ->and($body['background'])->toBe('transparent');
 });
 
@@ -98,9 +98,8 @@ it('rejects portable seed for OpenAI image generation', function () {
         ->run();
 })->throws(\AiSdk\Exceptions\InvalidArgumentException::class);
 
-it('loads image generation support from resources models json', function () {
+it('accepts opaque image model ids', function () {
     OpenAI::create(['apiKey' => 'sk-test']);
 
-    expect(OpenAI::image('gpt-image-1')->supports(\AiSdk\Capability::ImageGeneration))->toBeTrue()
-        ->and(OpenAI::model('gpt-4o')->supports(\AiSdk\Capability::ImageGeneration))->toBeFalse();
+    expect(OpenAI::image('future-image-model')->modelId())->toBe('future-image-model');
 });

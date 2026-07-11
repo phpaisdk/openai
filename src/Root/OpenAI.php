@@ -9,7 +9,6 @@ use AiSdk\Contracts\SpeechModelInterface;
 use AiSdk\Contracts\TextModelInterface;
 use AiSdk\OpenAI\OpenAIOptions;
 use AiSdk\OpenAI\OpenAIProvider;
-use AiSdk\Support\Concerns\RegistersModels;
 
 /**
  * Friendly facade for the OpenAI provider.
@@ -18,8 +17,6 @@ use AiSdk\Support\Concerns\RegistersModels;
  */
 final class OpenAI
 {
-    use RegistersModels;
-
     private static ?OpenAIProvider $default = null;
 
     /**

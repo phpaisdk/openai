@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use AiSdk\Capability;
 use AiSdk\Generate;
 use AiSdk\OpenAI;
 use AiSdk\OpenAI\Tests\Fakes\FakeHttpClient;
@@ -66,9 +65,8 @@ it('uses the requested OpenAI speech format for the response accept header', fun
         ->and($client->lastRequest?->getHeaderLine('Accept'))->toBe('audio/wav');
 });
 
-it('loads speech generation support from resources models json', function () {
+it('accepts opaque speech model ids', function () {
     OpenAI::create(['apiKey' => 'sk-test']);
 
-    expect(OpenAI::speech('gpt-4o-mini-tts')->supports(Capability::SpeechGeneration))->toBeTrue()
-        ->and(OpenAI::model('gpt-4o')->supports(Capability::SpeechGeneration))->toBeFalse();
+    expect(OpenAI::speech('future-speech-model')->modelId())->toBe('future-speech-model');
 });
