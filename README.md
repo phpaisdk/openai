@@ -63,6 +63,7 @@ $provider = OpenAI::create([
 | Reasoning | Native (`reasoning_effort`) |
 | Image generation | Native |
 | Speech generation | Native |
+| Transcription | Native |
 | Embeddings | Native |
 | Text input | Native |
 | Image input | Native |
@@ -140,6 +141,21 @@ $result = Generate::speech()
 $result->output->save(__DIR__.'/speech.mp3');
 ```
 
+## Transcription
+
+```php
+use AiSdk\Content;
+use AiSdk\Generate;
+use AiSdk\OpenAI;
+
+$result = Generate::transcription(Content::audio(__DIR__.'/meeting.mp3'))
+    ->model(OpenAI::transcription('gpt-4o-transcribe'))
+    ->providerOptions('openai', ['language' => 'en'])
+    ->run();
+
+echo $result->output->text;
+```
+
 ## Structured Output
 
 ```php
@@ -207,5 +223,6 @@ composer test
 ## Links
 
 - [Core Package](https://github.com/phpaisdk/core)
+- [OpenAI Speech-to-Text Guide](https://developers.openai.com/api/docs/guides/speech-to-text)
 - [OpenAI Embeddings Guide](https://developers.openai.com/api/docs/guides/embeddings)
 - [Project Documentation](https://github.com/phpaisdk)

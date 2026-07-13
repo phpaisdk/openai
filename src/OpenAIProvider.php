@@ -13,12 +13,15 @@ use AiSdk\Contracts\SpeechModelInterface;
 use AiSdk\Contracts\SpeechProviderInterface;
 use AiSdk\Contracts\TextModelInterface;
 use AiSdk\Contracts\TextProviderInterface;
+use AiSdk\Contracts\TranscriptionModelInterface;
+use AiSdk\Contracts\TranscriptionProviderInterface;
 use AiSdk\OpenAI\Models\OpenAIEmbeddingModel;
 use AiSdk\OpenAI\Models\OpenAIImageModel;
 use AiSdk\OpenAI\Models\OpenAISpeechModel;
 use AiSdk\OpenAI\Models\OpenAITextModel;
+use AiSdk\OpenAI\Models\OpenAITranscriptionModel;
 
-final class OpenAIProvider extends BaseProvider implements EmbeddingProviderInterface, ImageProviderInterface, SpeechProviderInterface, TextProviderInterface
+final class OpenAIProvider extends BaseProvider implements EmbeddingProviderInterface, ImageProviderInterface, SpeechProviderInterface, TextProviderInterface, TranscriptionProviderInterface
 {
     public function __construct(public readonly OpenAIOptions $options) {}
 
@@ -40,6 +43,11 @@ final class OpenAIProvider extends BaseProvider implements EmbeddingProviderInte
     public function speechModel(string $modelId): SpeechModelInterface
     {
         return new OpenAISpeechModel($modelId, $this->options);
+    }
+
+    public function transcriptionModel(string $modelId): TranscriptionModelInterface
+    {
+        return new OpenAITranscriptionModel($modelId, $this->options);
     }
 
     public function embeddingModel(string $modelId): EmbeddingModelInterface
