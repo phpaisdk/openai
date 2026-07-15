@@ -29,7 +29,7 @@ it('generates speech through the OpenAI audio endpoint', function () {
     OpenAI::create(['apiKey' => 'sk-test']);
 
     $result = Generate::speech('Read this aloud.')
-        ->model(OpenAI::speech('gpt-4o-mini-tts'))
+        ->model(OpenAI::model('gpt-4o-mini-tts'))
         ->voice('verse')
         ->format('mp3')
         ->providerOptions('openai', ['speed' => 1.1])
@@ -57,7 +57,7 @@ it('uses the requested OpenAI speech format for the response accept header', fun
     OpenAI::create(['apiKey' => 'sk-test']);
 
     Generate::speech('Read this as wav.')
-        ->model(OpenAI::speech('gpt-4o-mini-tts'))
+        ->model(OpenAI::model('gpt-4o-mini-tts'))
         ->format('wav')
         ->run();
 
@@ -68,5 +68,5 @@ it('uses the requested OpenAI speech format for the response accept header', fun
 it('accepts opaque speech model ids', function () {
     OpenAI::create(['apiKey' => 'sk-test']);
 
-    expect(OpenAI::speech('future-speech-model')->modelId())->toBe('future-speech-model');
+    expect(OpenAI::model('future-speech-model')->modelId())->toBe('future-speech-model');
 });

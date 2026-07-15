@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace AiSdk;
 
-use AiSdk\Contracts\EmbeddingModelInterface;
-use AiSdk\Contracts\ImageModelInterface;
-use AiSdk\Contracts\SpeechModelInterface;
-use AiSdk\Contracts\TextModelInterface;
-use AiSdk\Contracts\TranscriptionModelInterface;
+use AiSdk\Contracts\Model;
 use AiSdk\OpenAI\OpenAIOptions;
 use AiSdk\OpenAI\OpenAIProvider;
+use AiSdk\OpenAI\Webhooks\OpenAIWebhookVerifier;
 
 /**
  * Friendly facade for the OpenAI provider.
@@ -39,28 +36,19 @@ final class OpenAI
         self::$default = null;
     }
 
-    public static function model(string $modelId): TextModelInterface
+    public static function model(string $modelId): Model
     {
-        return self::default()->textModel($modelId);
+        return self::default()->model($modelId);
     }
 
-    public static function image(string $modelId): ImageModelInterface
+    /**
+     * Verify and decode an OpenAI webhook from its exact raw request body.
+     *
+     * @param  array<string, string|list<string>>  $headers
+     * @return array<string, mixed>
+     */
+    public static function verifyWebhook(string $payload, array $headers, string $signingSecret): array
     {
-        return self::default()->imageModel($modelId);
-    }
-
-    public static function speech(string $modelId): SpeechModelInterface
-    {
-        return self::default()->speechModel($modelId);
-    }
-
-    public static function transcription(string $modelId): TranscriptionModelInterface
-    {
-        return self::default()->transcriptionModel($modelId);
-    }
-
-    public static function embedding(string $modelId): EmbeddingModelInterface
-    {
-        return self::default()->embeddingModel($modelId);
+        return OpenAIWebhookVerifier::verify($payload, $headers, $signingSecret);
     }
 }

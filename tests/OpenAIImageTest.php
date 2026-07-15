@@ -37,7 +37,7 @@ it('generates images through the OpenAI image endpoint', function () {
     OpenAI::create(['apiKey' => 'sk-test']);
 
     $result = Generate::image('A red cube')
-        ->model(OpenAI::image('gpt-image-1'))
+        ->model(OpenAI::model('gpt-image-1'))
         ->count(2)
         ->size('1024x1024')
         ->providerOptions('openai', ['background' => 'transparent'])
@@ -67,7 +67,7 @@ it('maps common aspect ratios to OpenAI image sizes when size is omitted', funct
     OpenAI::create(['apiKey' => 'sk-test']);
 
     Generate::image('A landscape')
-        ->model(OpenAI::image('gpt-image-1'))
+        ->model(OpenAI::model('gpt-image-1'))
         ->aspectRatio('16:9')
         ->run();
 
@@ -81,7 +81,7 @@ it('rejects unsupported OpenAI aspect ratios when size is omitted', function () 
     OpenAI::create(['apiKey' => 'sk-test']);
 
     Generate::image('A panorama')
-        ->model(OpenAI::image('gpt-image-1'))
+        ->model(OpenAI::model('gpt-image-1'))
         ->aspectRatio('21:9')
         ->run();
 })->throws(\AiSdk\Exceptions\InvalidArgumentException::class);
@@ -93,7 +93,7 @@ it('rejects portable seed for OpenAI image generation', function () {
     OpenAI::create(['apiKey' => 'sk-test']);
 
     Generate::image('A deterministic image')
-        ->model(OpenAI::image('gpt-image-1'))
+        ->model(OpenAI::model('gpt-image-1'))
         ->seed(123)
         ->run();
 })->throws(\AiSdk\Exceptions\InvalidArgumentException::class);
@@ -101,5 +101,5 @@ it('rejects portable seed for OpenAI image generation', function () {
 it('accepts opaque image model ids', function () {
     OpenAI::create(['apiKey' => 'sk-test']);
 
-    expect(OpenAI::image('future-image-model')->modelId())->toBe('future-image-model');
+    expect(OpenAI::model('future-image-model')->modelId())->toBe('future-image-model');
 });

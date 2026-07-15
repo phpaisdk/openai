@@ -28,7 +28,7 @@ it('generates OpenAI embeddings', function () {
     OpenAI::create(['apiKey' => 'sk-test']);
 
     $result = Generate::embedding(['First document', 'Second document'])
-        ->model(OpenAI::embedding('text-embedding-3-small'))
+        ->model(OpenAI::model('text-embedding-3-small'))
         ->dimensions(256)
         ->providerOptions('openai', ['user' => 'user-123'])
         ->run();
@@ -50,5 +50,5 @@ it('generates OpenAI embeddings', function () {
 it('accepts opaque embedding model ids', function () {
     OpenAI::create(['apiKey' => 'sk-test']);
 
-    expect(OpenAI::embedding('future-embedding-model')->modelId())->toBe('future-embedding-model');
+    expect(OpenAI::model('future-embedding-model')->modelId())->toBe('future-embedding-model');
 });

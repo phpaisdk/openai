@@ -25,7 +25,7 @@ it('transcribes audio through the OpenAI transcription endpoint', function () {
     OpenAI::create(['apiKey' => 'sk-test']);
 
     $result = Generate::transcription(Content::audio('wav-bytes', 'audio/wav', 'clip.wav'))
-        ->model(OpenAI::transcription('gpt-4o-transcribe'))
+        ->model(OpenAI::model('gpt-4o-transcribe'))
         ->providerOptions('openai', ['language' => 'en'])
         ->run();
 
