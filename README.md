@@ -506,13 +506,13 @@ composer test
 The default suite is fixture- and conformance-based. Credentialed Live network
 verification is separate and is not run by `composer test`.
 
-## Links
+## Documentation
 
-- [Core Package](https://github.com/phpaisdk/core)
-- [OpenAI Realtime Guide](https://developers.openai.com/api/docs/guides/realtime)
-- [OpenAI Realtime Transcription](https://developers.openai.com/api/docs/guides/realtime-transcription)
-- [OpenAI WebRTC](https://developers.openai.com/api/docs/guides/realtime-webrtc)
-- [OpenAI Server Controls](https://developers.openai.com/api/docs/guides/realtime-server-controls)
-- [OpenAI Speech-to-Text Guide](https://developers.openai.com/api/docs/guides/speech-to-text)
-- [OpenAI Embeddings Guide](https://developers.openai.com/api/docs/guides/embeddings)
-- [Project Documentation](https://github.com/phpaisdk)
+- [PHP AI SDK documentation](https://phpaisdk.com/docs)
+- [OpenAI documentation](https://phpaisdk.com/docs/openai)
+
+## Community
+
+- [Contributing](https://github.com/phpaisdk/.github/blob/main/CONTRIBUTING.md)
+- [Support](https://github.com/phpaisdk/.github/blob/main/SUPPORT.md)
+- For private security reports, email [security@phpaisdk.com](mailto:security@phpaisdk.com).
