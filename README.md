@@ -516,3 +516,11 @@ verification is separate and is not run by `composer test`.
 - [Contributing](https://github.com/phpaisdk/.github/blob/main/CONTRIBUTING.md)
 - [Support](https://github.com/phpaisdk/.github/blob/main/SUPPORT.md)
 - For private security reports, email [security@phpaisdk.com](mailto:security@phpaisdk.com).
+
+## Files and native decisions (0.10.0 preparation)
+
+`OpenAI::files()` implements core `FileStoreInterface`: upload `FileUpload`, retrieve metadata, paginate, download a PSR stream and delete. Uploads default to `purpose=user_data`; override through upload options. Use `Content::storedFile($stored->reference)` in messages. Stored references and document URLs select Responses automatically; `providerOptions('openai', ['api' => 'responses'])` explicitly selects it for other inputs. Existing inline-file Chat requests remain supported.
+
+`Generate::decision($textOrJson)->model(OpenAI::model('gpt-6-luna'))->questions(...)->run()` calls native `/decisions`. Use core `Decisions\Question::predicate()`, `choice()` and `score()`. Supports image evidence, image question instructions, cache options, usage accounting and explicit refusal. No fallback to generated JSON. Refer to the core README for examples and authorization boundaries.
+
+Sources: [file inputs](https://developers.openai.com/api/docs/guides/file-inputs), [Files API](https://developers.openai.com/api/reference/resources/files), [Decisions](https://developers.openai.com/api/docs/guides/decisions).
