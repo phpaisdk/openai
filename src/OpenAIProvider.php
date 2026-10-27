@@ -38,6 +38,11 @@ final class OpenAIProvider extends BaseProvider implements EmbeddingProviderInte
         return OpenAIOptions::PROVIDER_NAME;
     }
 
+    protected function decisionModel(string $modelId): \AiSdk\Contracts\DecisionModelInterface
+    {
+        return new \AiSdk\OpenAI\Decisions\OpenAIDecisionModel($modelId, $this->options);
+    }
+
     protected function textModel(string $modelId): TextModelInterface
     {
         return new OpenAITextModel($modelId, $this->options);
