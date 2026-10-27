@@ -28,6 +28,11 @@ final class OpenAIProvider extends BaseProvider implements EmbeddingProviderInte
 {
     public function __construct(public readonly OpenAIOptions $options) {}
 
+    public function files(): \AiSdk\Contracts\FileStoreInterface
+    {
+        return new \AiSdk\OpenAICompatible\Files\CompatibleFileStore($this->options->sdk ?? \AiSdk\Generate::sdk(), $this->options->baseUrl, $this->options->authHeaders(), $this->name(), 'user_data');
+    }
+
     public function name(): string
     {
         return OpenAIOptions::PROVIDER_NAME;

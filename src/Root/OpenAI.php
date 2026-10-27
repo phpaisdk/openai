@@ -36,6 +36,11 @@ final class OpenAI
         self::$default = null;
     }
 
+    public static function files(): \AiSdk\Contracts\FileStoreInterface
+    {
+        return self::default()->files();
+    }
+
     public static function model(string $modelId): Model
     {
         return self::default()->model($modelId);
