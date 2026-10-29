@@ -9,6 +9,7 @@ use AiSdk\ContentSource;
 use AiSdk\Contracts\BaseModel;
 use AiSdk\Contracts\DecisionModelInterface;
 use AiSdk\Decisions\Question;
+use AiSdk\Exceptions\InvalidArgumentException;
 use AiSdk\OpenAI\OpenAIOptions;
 use AiSdk\Requests\DecisionModelRequest;
 use AiSdk\Responses\DecisionModelResponse;
@@ -28,7 +29,7 @@ final class OpenAIDecisionModel extends BaseModel implements DecisionModelInterf
     public function decide(DecisionModelRequest $request): DecisionModelResponse
     {
         if (count($request->questions) < 1 || count($request->questions) > 400) {
-            throw new \InvalidArgumentException('OpenAI Decisions requires 1 to 400 questions.');
+            throw new InvalidArgumentException('OpenAI Decisions requires 1 to 400 questions.');
         }
         $input = $request->input;
         if (is_array($input) || $request->images !== []) {
@@ -40,7 +41,7 @@ final class OpenAIDecisionModel extends BaseModel implements DecisionModelInterf
         }
         foreach (['model', 'input', 'questions'] as $reserved) {
             if (array_key_exists($reserved, $request->providerOptions)) {
-                throw new \InvalidArgumentException('Decision provider options cannot override model, input, or questions.');
+                throw new InvalidArgumentException('Decision provider options cannot override model, input, or questions.');
             }
         }
         $body = ['model' => $this->id, 'input' => $input, 'questions' => array_map(self::question(...), $request->questions)] + $request->providerOptions;
@@ -61,7 +62,7 @@ final class OpenAIDecisionModel extends BaseModel implements DecisionModelInterf
         }
         if ($question->kind === 'score') {
             if (count($question->levels) > 10) {
-                throw new \InvalidArgumentException('OpenAI Decisions supports at most 10 score levels.');
+                throw new InvalidArgumentException('OpenAI Decisions supports at most 10 score levels.');
             }
             $result['levels'] = array_map(static fn(string $level): array => ['label' => $level], $question->levels);
         }
@@ -76,11 +77,11 @@ final class OpenAIDecisionModel extends BaseModel implements DecisionModelInterf
             return ['type' => 'input_text', 'text' => (string) $part->textValue()];
         }
         if ($part->type !== Content::TYPE_IMAGE || $part->fileReference() !== null) {
-            throw new \InvalidArgumentException('Decisions accepts text and inline or URL images, not file ids.');
+            throw new InvalidArgumentException('Decisions accepts text and inline or URL images, not file ids.');
         }
         $url = $part->source() === ContentSource::Url ? $part->url() : $part->dataUri();
         if ($url === null) {
-            throw new \InvalidArgumentException('Decision image has no usable data.');
+            throw new InvalidArgumentException('Decision image has no usable data.');
         }
 
         return ['type' => 'input_image', 'image_url' => $url];

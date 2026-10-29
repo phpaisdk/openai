@@ -43,7 +43,7 @@ it('validates native limits and supports multimodal question instructions', func
     OpenAI::create(['apiKey' => 'test', 'sdk' => new Sdk($http, $factory, $factory)]);
     Generate::decision('reference')->model(OpenAI::model('opaque'))->questions(Question::predicate('same', [Content::text('Does this match?'), Content::image('https://example.test/a.png')]))->run();
     expect($http->sentBody()['questions'][0]['instructions'][1])->toBe(['type' => 'input_image', 'image_url' => 'https://example.test/a.png']);
-    expect(fn() => Generate::decision('input')->model(OpenAI::model('opaque'))->questions(Question::score('score', 'Rate', array_fill(0, 11, 'Level')))->run())->toThrow(InvalidArgumentException::class);
+    expect(fn() => Generate::decision('input')->model(OpenAI::model('opaque'))->questions(Question::score('score', 'Rate', array_fill(0, 11, 'Level')))->run())->toThrow(AiSdk\Exceptions\InvalidArgumentException::class);
     expect($http->requests)->toHaveCount(1);
     OpenAI::reset();
 });

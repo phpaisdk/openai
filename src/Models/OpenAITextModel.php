@@ -7,6 +7,7 @@ namespace AiSdk\OpenAI\Models;
 use AiSdk\Capability;
 use AiSdk\Contracts\BaseModel;
 use AiSdk\Contracts\TextModelInterface;
+use AiSdk\Exceptions\InvalidArgumentException;
 use AiSdk\OpenAI\OpenAIOptions;
 use AiSdk\OpenAICompatible\ChatRequestBuilder;
 use AiSdk\OpenAICompatible\ChatRequestProfile;
@@ -108,7 +109,7 @@ final class OpenAITextModel extends BaseModel implements TextModelInterface
     {
         $api = $request->providerOptionsFor($this->provider())['api'] ?? null;
         if ($api !== null && ! in_array($api, ['responses', 'chat'], true)) {
-            throw new \InvalidArgumentException('api must be responses or chat.');
+            throw new InvalidArgumentException('api must be responses or chat.');
         }
         if ($api !== null) {
             return $api === 'responses';
